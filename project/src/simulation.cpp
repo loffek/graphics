@@ -9,11 +9,11 @@ Simulation::init(GLFWwindow *window_){
     // set window
     window = window_;
 
-/*    if (-1 == render_consumer.init(window)){
+    if (-1 == graphics_engine.init(window)){
         fprintf( stderr, "Simulation: Could not initialize render consumer \n");
         return -1;
     }
-*/
+
     return 0;
 
 }

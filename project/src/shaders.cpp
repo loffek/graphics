@@ -67,8 +67,8 @@ GLuint createShaderProgram()
     GLuint programId;
     GLuint vertexShader,fragmentShader;
 
-    const char *vertex_shader = "vertex.glsl";
-    const char *fragment_shader = "fragment.glsl";
+    const char *vertex_shader = "../shaders/vertex.glsl";
+    const char *fragment_shader = "../shaders/fragment.glsl";
 
     vertexShader = loadShader(vertex_shader, GL_VERTEX_SHADER);
     fragmentShader = loadShader(fragment_shader, GL_FRAGMENT_SHADER);

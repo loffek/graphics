@@ -6,22 +6,22 @@ LGLFW = -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework C
 IGLFW = -I $(LIBDIR)/glfw/include/
 IGLM = -I $(LIBDIR)/glm/
 
-CFLAGS = -I $(IDIR)
+CFLAGS = -I $(IDIR) $(IGLM) $(IGLFW)
 
 prog: main.o simulation.o graphics_engine.o shaders.o
-	$(CC) $(CFLAGS) -o prog main.o simulation.o graphics_engine.o shaders.o $(LGLFW)
+	$(CC) -o prog main.o simulation.o graphics_engine.o shaders.o $(LGLFW)
 
 main.o: main.cpp $(IDIR)/simulation.hpp
-	$(CC) $(CFLAGS) -c main.cpp $(IGLM) $(IGLFW)
+	$(CC) $(CFLAGS) -c main.cpp
 
 simulation.o: simulation.cpp $(IDIR)/simulation.hpp $(IDIR)/graphics_engine.hpp
-	$(CC) $(CFLAGS) -c simulation.cpp $(IGLFW)
+	$(CC) $(CFLAGS) -c simulation.cpp
 
 graphics_engine.o: graphics_engine.cpp $(IDIR)/graphics_engine.hpp $(IDIR)/shaders.hpp
-	$(CC) $(CFLAGS) -c graphics_engine.cpp $(IGLM) $(IGLFW)
+	$(CC) $(CFLAGS) -c graphics_engine.cpp
 
 shaders.o: shaders.cpp $(IDIR)/shaders.hpp
-	$(CC) $(CFLAGS) -c shaders.cpp $(IGLFW)
+	$(CC) $(CFLAGS) -c shaders.cpp
 
 #prog: tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o
 #	$(CC) $(CFLAGS) -o tut01 tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o

@@ -22,13 +22,15 @@ GraphicsEngine::init(GLFWwindow* window_){
         fprintf( stderr, "Could not create the shaders\n");
         return -1;
     }
-    fprintf( stdout, "using program\n");
+    fprintf( stdout, "use program...");
     glUseProgram(defaultShaderProgram);
+    fprintf( stdout, "done\n");
 
-    fprintf( stdout, "getting the uniforms\n");
+    fprintf( stdout, "get the uniforms...");
     perspectiveMatrixUnif = glGetUniformLocation(defaultShaderProgram, "perspectiveMatrix");
     viewMatrixUnif = glGetUniformLocation(defaultShaderProgram, "viewMatrix");
     modelMatrixUnif = glGetUniformLocation(defaultShaderProgram, "modelMatrix");
+    fprintf( stdout, "done\n");
 
     perspectiveMatrix = glm::perspective(
         60.0f,            // The horizontal Field of View, in degrees : the amount of "zoom". Think "camera lens". Usually between 90° (extra wide) and 30° (zoomed in)

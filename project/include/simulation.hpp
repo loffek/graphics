@@ -12,7 +12,7 @@
 //#include "world.hpp"
 //#include "node.hpp"
 //#include "mesh.hpp"
-//#include "render_consumer.hpp"
+#include "graphics_engine.hpp"
 
 class Simulation
 {
@@ -21,6 +21,7 @@ private:
 
 //    World world;
 
+    GraphicsEngine graphics_engine;
 //    RenderConsumer render_consumer;
     //PhysicsConsumer physics_consumer;
     //LogicConsumer logic_consumer;
