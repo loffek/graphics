@@ -1,5 +1,5 @@
-#ifndef RENDER_CONSUMER_HPP
-#define RENDER_CONSUMER_HPP
+#ifndef GRAPHICS_ENGINE_HPP
+#define GRAPHICS_ENGINE_HPP
 
 // standard headers
 #include <cstring> /* memset */
@@ -7,21 +7,20 @@
 #include <vector>
 
 // third party headers
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 // project headers
 #include "shaders.hpp"
-#include "node.hpp"
-#include "mesh.hpp"
-#include "world.hpp"
+//#include "node.hpp"
+//#include "mesh.hpp"
+//#include "world.hpp"
 
 // forward declarations
-class SceneGraph;
+//class SceneGraph;
 
-class RenderConsumer
+class GraphicsEngine
 {
 private:
     glm::vec2 SCREEN_SIZE;
@@ -37,18 +36,18 @@ private:
     glm::vec3 upVector;
     glm::mat4 viewMatrix;
 
-    World* world;
+//    World* world;
     GLFWwindow* window;
 
-    std::vector<Mesh *> meshes;
+//    std::vector<Mesh *> meshes;
 
 public:
-    RenderConsumer();
+    GraphicsEngine();
     int init(GLFWwindow* window_);
-    int registerMesh(Mesh* mesh);
-    int unregisterMesh(Mesh* mesh);
+//    int registerMesh(Mesh* mesh);
+//    int unregisterMesh(Mesh* mesh);
 
-    void setWorld(World* world_);
+//    void setWorld(World* world_);
 
     void resizeWindow(GLFWwindow* window_, int window_width, int window_height);
     void render();

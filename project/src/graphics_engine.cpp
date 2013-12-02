@@ -1,11 +1,11 @@
-#include "render_consumer.hpp"
+#include "graphics_engine.hpp"
 
-RenderConsumer::RenderConsumer(){
-    world = NULL;
+GraphicsEngine::GraphicsEngine(){
+//    world = NULL;
 }
 
 int
-RenderConsumer::init(GLFWwindow* window_){
+GraphicsEngine::init(GLFWwindow* window_){
     window = window_;
     // get screen size and aspect ratio
     int x,y;
@@ -56,14 +56,15 @@ RenderConsumer::init(GLFWwindow* window_){
 
     return 0;
 }
-
+/*
 void
-RenderConsumer::setWorld(World* world_){
+GraphicsEngine::setWorld(World* world_){
     world = world_;
 }
-
+*/
 void
-RenderConsumer::render(){
+GraphicsEngine::render(){
+/*
     GLuint VAO, VBO, IBO;
     std::vector<Node *> nodes = world->getNodes();
 
@@ -98,10 +99,11 @@ RenderConsumer::render(){
 
     // display
     glfwSwapBuffers(window);
+*/
 }
 
 void
-RenderConsumer::resizeWindow(GLFWwindow* window_, int window_width, int window_height){
+GraphicsEngine::resizeWindow(GLFWwindow* window_, int window_width, int window_height){
     // keeps apect ratio by filling symmetrical margins as needed
 
     if (window_ != window)
@@ -126,9 +128,10 @@ RenderConsumer::resizeWindow(GLFWwindow* window_, int window_width, int window_h
     }
     glViewport(margin_left, margin_top, (GLsizei) SCREEN_SIZE.x, (GLsizei) SCREEN_SIZE.y);
 }
-
+/*
 int
-RenderConsumer::registerMesh(Mesh* mesh){
+GraphicsEngine::registerMesh(Mesh* mesh){
+
     // make sure we have a context, maybe get one in constructor...
 
     GLuint VAO, VBO, IBO;
@@ -183,4 +186,4 @@ RenderConsumer::registerMesh(Mesh* mesh){
 
     // all ok!
     return 0;
-}
+}*/

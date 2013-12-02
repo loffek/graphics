@@ -1,13 +1,3 @@
-// Include third party
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-//#include <glm/glm.hpp>
-
-#include <iostream>
-#include <fstream>
-//#include <stdexcept>
-//#include <cmath>
-
 #include "shaders.hpp"
 
 /* A simple function that will read a file into an allocated char pointer buffer */
@@ -60,7 +50,7 @@ GLuint loadShader(const char *shaderFile, GLenum type)
         switch(type)
         {
         case GL_VERTEX_SHADER: strShaderType = "vertex"; break;
-        case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break;
+        //case GL_GEOMETRY_SHADER: strShaderType = "geometry"; break; // requires GLEW? which OpenGL versions are affected?
         case GL_FRAGMENT_SHADER: strShaderType = "fragment"; break;
         }
 

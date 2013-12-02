@@ -8,14 +8,20 @@ IGLM = -I $(LIBDIR)/glm/
 
 CFLAGS = -I $(IDIR)
 
-prog: main.o simulation.o
-	$(CC) $(CFLAGS) -o prog main.o simulation.o $(LGLFW)
+prog: main.o simulation.o graphics_engine.o shaders.o
+	$(CC) $(CFLAGS) -o prog main.o simulation.o graphics_engine.o shaders.o $(LGLFW)
 
 main.o: main.cpp $(IDIR)/simulation.hpp
 	$(CC) $(CFLAGS) -c main.cpp $(IGLM) $(IGLFW)
 
-simulation.o: simulation.cpp $(IDIR)/simulation.hpp
+simulation.o: simulation.cpp $(IDIR)/simulation.hpp $(IDIR)/graphics_engine.hpp
 	$(CC) $(CFLAGS) -c simulation.cpp $(IGLFW)
+
+graphics_engine.o: graphics_engine.cpp $(IDIR)/graphics_engine.hpp $(IDIR)/shaders.hpp
+	$(CC) $(CFLAGS) -c graphics_engine.cpp $(IGLM) $(IGLFW)
+
+shaders.o: shaders.cpp $(IDIR)/shaders.hpp
+	$(CC) $(CFLAGS) -c shaders.cpp $(IGLFW)
 
 #prog: tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o
 #	$(CC) $(CFLAGS) -o tut01 tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o
@@ -32,8 +38,6 @@ simulation.o: simulation.cpp $(IDIR)/simulation.hpp
 #render_consumer.o: render_consumer.cpp render_consumer.hpp shaders.hpp mesh.hpp node.hpp world.hpp
 #	$(CC) $(CFLAGS) -c render_consumer.cpp -I lib/glm/
 
-#shaders.o: shaders.cpp shaders.hpp node.hpp
-#	$(CC) $(CFLAGS) -c shaders.cpp
 
 #node.o: node.cpp node.hpp
 #	$(CC) $(CFLAGS) -c node.cpp -I lib/glm/
