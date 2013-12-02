@@ -6,23 +6,22 @@
 #include <fstream>
 
 // third party headers
-#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 // project headers
-#include "world.hpp"
-#include "node.hpp"
-#include "mesh.hpp"
-#include "render_consumer.hpp"
+//#include "world.hpp"
+//#include "node.hpp"
+//#include "mesh.hpp"
+//#include "render_consumer.hpp"
 
 class Simulation
 {
 private:
     GLFWwindow* window;
 
-    World world;
+//    World world;
 
-    RenderConsumer render_consumer;
+//    RenderConsumer render_consumer;
     //PhysicsConsumer physics_consumer;
     //LogicConsumer logic_consumer;
     //AudioConsumer audio_consumer;
@@ -30,11 +29,10 @@ private:
 public:
     Simulation();
     int init(GLFWwindow *window);
-    int loadModels(const char* folder);
+//    int loadModels(const char* folder);
 
-    /* Physics API */
-    //void start();
-    //void stop();
+    void start();
+    void stop();
 
     /* Graphics API */
     void render();

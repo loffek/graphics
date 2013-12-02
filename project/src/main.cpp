@@ -1,55 +1,114 @@
+// TODO: add projection matrix and all that stuff
+// TODO: make som smart modularisation of the loadModel and render function
+// TODO: change to stream_draw
+
+// third party libraries
+// For window, context?
+//#include <GL/glew.h>
 #include <GLFW/glfw3.h>
-#include <stdlib.h>
-#include <stdio.h>
-static void error_callback(int error, const char* description)
-{
-    fputs(description, stderr);
-}
-static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
-}
-int main(void)
-{
-    GLFWwindow* window;
-    glfwSetErrorCallback(error_callback);
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
-    if (!window)
-    {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+#include <glm/glm.hpp>
+
+// Include standard headers
+//#include <iostream>
+#include <fstream>
+//#include <stdexcept>
+//#include <cmath>
+
+// Include project headers
+#include "simulation.hpp"
+
+
+const glm::vec2 SCREEN_SIZE(640, 480);
+const float ASPECT_RATIO = SCREEN_SIZE.x/SCREEN_SIZE.y;
+
+GLFWwindow* window = NULL;
+Simulation* simulation = NULL;
+
+GLFWwindow* initGLFWwindow();
+
+void windowResizeCallback(GLFWwindow *window, int width, int height);
+
+int main(){
+
+    window = initGLFWwindow();
+    if (!window){
+        return -1;
     }
-    glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, key_callback);
+
+    simulation = new Simulation();
+
+    if (-1 == simulation->init(window)){
+        glfwTerminate();
+        return -1;
+    }
+
+/*
+    if (-1 == simulation->loadModels("../data/")){
+        glfwTerminate();
+        return -1;
+    }
+*/
+
+    simulation->start();
+
+    // Loop until the user closes the window
     while (!glfwWindowShouldClose(window))
     {
-        float ratio;
-        int width, height;
-        glfwGetFramebufferSize(window, &width, &height);
-        ratio = width / (float) height;
-        glViewport(0, 0, width, height);
-        glClear(GL_COLOR_BUFFER_BIT);
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
-        glOrtho(-ratio, ratio, -1.f, 1.f, 1.f, -1.f);
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
-        glRotatef((float) glfwGetTime() * 50.f, 0.f, 0.f, 1.f);
-        glBegin(GL_TRIANGLES);
-        glColor3f(1.f, 0.f, 0.f);
-        glVertex3f(-0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 1.f, 0.f);
-        glVertex3f(0.6f, -0.4f, 0.f);
-        glColor3f(0.f, 0.f, 1.f);
-        glVertex3f(0.f, 0.6f, 0.f);
-        glEnd();
-        glfwSwapBuffers(window);
+        // render!!
+        simulation->render();
+
+        /* Poll for and process events */
         glfwPollEvents();
     }
-    glfwDestroyWindow(window);
+
+    simulation->stop();
+    delete simulation;
+
     glfwTerminate();
-    exit(EXIT_SUCCESS);
+    return 0;
+}
+
+void windowResizeCallback(GLFWwindow *window, int width, int height){
+    if (simulation)
+        simulation->resizeWindow(window, width, height);
+}
+
+GLFWwindow*
+initGLFWwindow(){
+    GLFWwindow* window;
+
+    // Initialise GLFW
+    if( !glfwInit() )
+    {
+        fprintf( stderr, "Failed to initialize GLFW\n" );
+        return NULL;
+    }
+
+    //glfwWindowHint( GLFW_SAMPLES, 4 ); // 4x antialiasing
+    glfwWindowHint( GLFW_CONTEXT_VERSION_MAJOR, 3 );
+    glfwWindowHint( GLFW_CONTEXT_VERSION_MINOR, 2 );
+    glfwWindowHint( GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE );
+    glfwWindowHint( GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE );
+
+    // Open a window and create its OpenGL context
+    window = glfwCreateWindow( SCREEN_SIZE.x, SCREEN_SIZE.y, "Tutorial 01", NULL, NULL);
+    if( !window )
+    {
+        fprintf( stderr, "Failed to open GLFW window\n" );
+        glfwTerminate();
+        return NULL;
+    }
+
+    // Make the window's context current
+    glfwMakeContextCurrent(window);
+
+    fprintf( stdout, "OpenGL version: %s\n", glGetString(GL_VERSION));
+    fprintf( stdout, "GLSL version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+    fprintf( stdout, "Vendor: %s\n", glGetString(GL_VENDOR));
+    fprintf( stdout, "Renderer: %s\n", glGetString(GL_RENDERER));
+
+    // bind callbacks
+    glfwSetWindowSizeCallback(window, windowResizeCallback);
+
+    return window;
 }

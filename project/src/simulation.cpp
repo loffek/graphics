@@ -1,9 +1,7 @@
 #include "simulation.hpp"
 
 Simulation::Simulation()
-    :   window(NULL),
-        world(),
-        render_consumer(){
+    :   window(NULL){
 }
 
 int
@@ -11,13 +9,24 @@ Simulation::init(GLFWwindow *window_){
     // set window
     window = window_;
 
-    if (-1 == render_consumer.init(window)){
+/*    if (-1 == render_consumer.init(window)){
         fprintf( stderr, "Simulation: Could not initialize render consumer \n");
         return -1;
     }
+*/
     return 0;
+
 }
 
+void
+Simulation::start(){
+}
+
+void
+Simulation::stop(){
+}
+
+/*
 int
 Simulation::loadModels(const char* folder){
     // load the wedge mesh
@@ -46,13 +55,14 @@ Simulation::loadModels(const char* folder){
     render_consumer.setWorld(&world);
     return 0;
 }
+*/
 
 void
 Simulation::render(){
-    render_consumer.render();
+//    render_consumer.render();
 }
 
 void
 Simulation::resizeWindow(GLFWwindow* window, int width, int height){
-    render_consumer.resizeWindow(window, width, height);
+//    render_consumer.resizeWindow(window, width, height);
 }

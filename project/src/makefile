@@ -6,14 +6,19 @@ LGLFW = -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework C
 IGLFW = -I $(LIBDIR)/glfw/include/
 IGLM = -I $(LIBDIR)/glm/
 
+CFLAGS = -I $(IDIR)
 
-prog: main.o
-	$(CC) $(CFLAGS) -o prog main.o $(LGLFW)
+prog: main.o simulation.o
+	$(CC) $(CFLAGS) -o prog main.o simulation.o $(LGLFW)
+
+main.o: main.cpp $(IDIR)/simulation.hpp
+	$(CC) $(CFLAGS) -c main.cpp $(IGLM) $(IGLFW)
+
+simulation.o: simulation.cpp $(IDIR)/simulation.hpp
+	$(CC) $(CFLAGS) -c simulation.cpp $(IGLFW)
+
 #prog: tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o
 #	$(CC) $(CFLAGS) -o tut01 tut01.o simulation.o world.o scene_graph.o render_consumer.o shaders.o node.o mesh.o file_helpers.o
-
-main.o: main.cpp
-	$(CC) $(CFLAGS) -c main.cpp $(IGLM) $(IGLFW)
 
 #simulation.o: simulation.cpp simulation.hpp world.hpp node.hpp mesh.hpp render_consumer.hpp
 #	$(CC) $(CFLAGS) -c simulation.cpp -I lib/glm/
